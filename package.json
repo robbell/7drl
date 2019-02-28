@@ -1,0 +1,27 @@
+{
+  "name": "7drl",
+  "version": "0.0.0",
+  "description": "The beginnings of my Seven Day Roguelike entry.",
+  "main": "main.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "browserslist": {
+    "development": [
+      "last 1 chrome version"
+    ]
+  },
+  "dependencies": {
+    "pixi.js": "~4.8.6"
+  },
+  "devDependencies": {
+    "@types/pixi.js": "~4.8.6",
+    "parcel-bundler": "~1.10.3",
+    "typescript": "~3.1.6"
+  },
+  "keywords": [],
+  "engine": {
+    "node": ">=8"
+  }
+}
