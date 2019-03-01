@@ -1,4 +1,4 @@
-import Game from './lib/game'
+import Game from './lib/Game'
 import * as P from 'pixi.js'
 
 window.addEventListener('DOMContentLoaded', initGame)
