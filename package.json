@@ -4,6 +4,7 @@
   "description": "The beginnings of my Seven Day Roguelike entry.",
   "main": "main.js",
   "scripts": {
+    "prebuild": "rmdir dist /s /q",
     "start": "parcel index.html",
     "build": "parcel build index.html"
   },

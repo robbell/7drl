@@ -1,5 +1,5 @@
 import * as P from 'pixi.js'
-const someImage = require('./floor.png');
+const someImage = require('../img/floor.png');
 
 
 export default class Game {
