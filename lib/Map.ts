@@ -6,18 +6,18 @@ export default class Map {
 
   constructor() {
     this.tiles = [];
-    for (var i: number = 0; i < 5; i++) {
-      this.tiles[i] = [];
-      for (var j: number = 0; j < 5; j++) {
-        this.tiles[i][j] = new Tile("floor")
+    for (var rowCount: number = 0; rowCount < 5; rowCount++) {
+      this.tiles[rowCount] = [];
+      for (var tileCount: number = 0; tileCount < 10; tileCount++) {
+        this.tiles[rowCount][tileCount] = new Tile("floor", rowCount, tileCount)
       }
     }
   }
 
-  update(stage: Container): void {
+  update(container: Container): void {
     this.tiles.forEach(row => {
       row.forEach(tile => {
-        tile.update(stage)
+        tile.update(container)
       });
     });
   }
