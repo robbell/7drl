@@ -2,10 +2,11 @@ import { Container } from 'pixi.js'
 import { Tile } from './Tile'
 import { Hero } from './Hero'
 import { GameConstants } from './GameConstants'
+import { Coordinate } from './Coordinate';
 
 export class Map {
   tiles: Tile[][]
-  hero: Hero = new Hero(0, 0)
+  hero: Hero = new Hero(new Coordinate(3, 3))
 
   get xFocalPoint(): number {
     return this.hero.x + GameConstants.tileWidth / 2

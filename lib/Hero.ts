@@ -1,16 +1,16 @@
 import { Container } from 'pixi.js'
 import { HeroRenderer } from './HeroRenderer'
 import { HeroInput } from './HeroInput'
+import { Coordinate, Direction } from './Coordinate';
 
 export class Hero {
     static movementSteps: number = 15
     private heroInput: HeroInput = new HeroInput()
     private heroRenderer: HeroRenderer = new HeroRenderer()
     isMoving: boolean = false
-    movingToTileX: number
-    movingToTileY: number
+    destination: Coordinate
     movementStep: number = 0
-    
+
     get x(): number {
         return this.heroRenderer.x
     }
@@ -19,9 +19,9 @@ export class Hero {
         return this.heroRenderer.y
     }
 
-    constructor(public tileX: number, public tileY: number) {
-        this.movingToTileX = tileX
-        this.movingToTileY = tileY
+    constructor(public position: Coordinate) {
+        console.log(position)
+        this.destination = position
     }
 
     update(stage: Container): void {
@@ -32,33 +32,11 @@ export class Hero {
         this.heroRenderer.render(this, stage)
     }
 
-    // ToDo: Refactor to single method
-    tryMoveUp(): void {
+    tryMove(direction: Direction): void {
         if (this.isMoving) return
 
         this.isMoving = true
-        this.movingToTileY = this.tileY - 1
-    }
-
-    tryMoveDown(): void {
-        if (this.isMoving) return
-
-        this.isMoving = true
-        this.movingToTileY = this.tileY + 1
-    }
-
-    tryMoveLeft(): void {
-        if (this.isMoving) return
-
-        this.isMoving = true
-        this.movingToTileX = this.tileX - 1
-    }
-
-    tryMoveRight(): void {
-        if (this.isMoving) return
-
-        this.isMoving = true
-        this.movingToTileX = this.tileX + 1
+        this.destination = this.position.move(direction)
     }
 
     private continueMoving() {
@@ -67,8 +45,7 @@ export class Hero {
         if (this.movementStep != Hero.movementSteps) return
 
         this.isMoving = false
-        this.tileX = this.movingToTileX
-        this.tileY = this.movingToTileY
+        this.position = this.destination
         this.movementStep = 0
     }
 }

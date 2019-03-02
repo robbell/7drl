@@ -6,7 +6,7 @@ export default class Game {
   private app: P.Application
   private map: Map
   private mapContainer: P.Container
-  private static scaleFactor: number = 3
+  private static scaleFactor: number = 2
 
   constructor(app: P.Application) {
     P.settings.SCALE_MODE = P.SCALE_MODES.NEAREST

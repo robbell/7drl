@@ -23,20 +23,19 @@ export class HeroRenderer {
     }
 
     render(hero: Hero, stage: Container): void {
-        
-        this.sprite.x = hero.tileX * GameConstants.tileWidth + this.getXAdjustmentForMovement(hero)
-        this.sprite.y = hero.tileY * GameConstants.tileHeight + this.getYAdjustmentForMovement(hero) 
-        
+        this.sprite.x = hero.position.x * GameConstants.tileWidth + this.getXAdjustmentForMovement(hero)
+        this.sprite.y = hero.position.y * GameConstants.tileHeight + this.getYAdjustmentForMovement(hero)
+
         stage.addChild(this.sprite)
     }
 
     private getXAdjustmentForMovement(hero: Hero): any {
-        if (hero.movingToTileX == hero.tileX) return 0
-        return (this.movementXPixels * hero.movementStep) * (hero.movingToTileX - hero.tileX)
+        if (hero.destination.x == hero.position.x) return 0
+        return (this.movementXPixels * hero.movementStep) * (hero.destination.x - hero.position.x)
     }
 
     private getYAdjustmentForMovement(hero: Hero) {
-        if (hero.movingToTileY == hero.tileY) return 0
-        return (this.movementYPixels * hero.movementStep) * (hero.movingToTileY - hero.tileY)
+        if (hero.destination.y == hero.position.y) return 0
+        return (this.movementYPixels * hero.movementStep) * (hero.destination.y - hero.position.y)
     }
 }
