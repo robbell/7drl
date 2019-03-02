@@ -21,9 +21,7 @@ export class MapBuilder {
 
     private generatorCallback() {
         return function (x: number, y: number, value: number) {
-            console.log(x, y, value)
-            if (value > 0)
-                this.map.tiles[x][y] = new Tile("something", x, y);
+            if (value > 0) this.map.tiles[x][y] = new Tile("something", x, y);
         }.bind(this);
     }
 }
