@@ -1,5 +1,6 @@
 import { Sprite, Container } from 'pixi.js'
 import { Hero } from './Hero'
+import GameConstants from './GameConstants';
 const someImage = require('../img/hero.png')
 
 export class HeroRenderer {
@@ -18,16 +19,16 @@ export class HeroRenderer {
     }
 
     constructor() {
-        this.movementYPixels = HeroRenderer.height / Hero.movementSteps
-        this.movementXPixels = HeroRenderer.width / Hero.movementSteps
+        this.movementYPixels = GameConstants.tileHeight / Hero.movementSteps
+        this.movementXPixels = GameConstants.tileWidth / Hero.movementSteps
         this.sprite = Sprite.from(someImage)
     }
 
     render(hero: Hero, stage: Container): void {
-
-        this.sprite.x = hero.tileX * HeroRenderer.width + this.getXAdjustmentForMovement(hero)
-        this.sprite.y = (hero.tileY * HeroRenderer.height) + this.getYAdjustmentForMovement(hero)
-
+        
+        this.sprite.x = hero.tileX * GameConstants.tileWidth + this.getXAdjustmentForMovement(hero)
+        this.sprite.y = hero.tileY * GameConstants.tileHeight + this.getYAdjustmentForMovement(hero) 
+        
         stage.addChild(this.sprite)
     }
 

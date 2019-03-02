@@ -11,7 +11,7 @@ function removeExistingGame(): void {
 function init(): P.Application {
   removeExistingGame()
   const app = new P.Application(
-    500, 500, { backgroundColor: 0xD7D7D7 }
+    800, 600, { backgroundColor: 0xD7D7D7 }
   )
   document.body.appendChild(app.view)
   return app
