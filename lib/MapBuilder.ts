@@ -1,11 +1,11 @@
 import { Map } from './Map'
 import { Map as MapGenerator } from "rot-js"
-import { Tile } from './Tile';
+import { Tile } from './Tile'
 
 export class MapBuilder {
-    private width: number = 10;
-    private height: number = 10;
-    private map!: Map;
+    private width: number = 10
+    private height: number = 10
+    private map!: Map
 
     WithDimensions(width: number, height: number): MapBuilder {
         this.width = width, this.height = height
@@ -14,14 +14,14 @@ export class MapBuilder {
 
     build(): Map {
         this.map = new Map(this.width, this.height)
-        let rotMap = new MapGenerator.DividedMaze(this.width, this.height)
-        rotMap.create(this.generatorCallback())
+        let rotMap = new MapGenerator.Digger(this.width, this.height)
+        rotMap.create((x: number, y: number, value: number) => this.generatorCallback(x, y, value))
+
+        this.map.setStartPosition()
         return this.map
     }
 
-    private generatorCallback() {
-        return function (x: number, y: number, value: number) {
-            if (value > 0) this.map.tiles[x][y] = new Tile("something", x, y);
-        }.bind(this);
+    private generatorCallback(x: number, y: number, value: number) {
+        if (value > 0) this.map.tiles[x][y] = new Tile("something", x, y)
     }
 }
