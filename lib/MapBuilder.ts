@@ -17,7 +17,7 @@ export class MapBuilder {
         let rotMap = new MapGenerator.Digger(this.width, this.height)
         rotMap.create((x: number, y: number, value: number) => this.generatorCallback(x, y, value))
 
-        this.map.setStartPosition()
+        this.map.initialise()
         return this.map
     }
 

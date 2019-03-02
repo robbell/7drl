@@ -13,6 +13,7 @@ export class TileRenderer {
     render(tile: Tile, stage: Container): void {
         this.sprite.x = tile.x * GameConstants.tileWidth
         this.sprite.y = tile.y * GameConstants.tileHeight
+        this.sprite.alpha = tile.visibility
         stage.addChild(this.sprite)
     }
 }
