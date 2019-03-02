@@ -1,5 +1,6 @@
 import * as P from 'pixi.js'
-import Map from './Map'
+import { Map } from './Map'
+import { MapBuilder } from './MapBuilder'
 
 export default class Game {
   private app: P.Application
@@ -11,7 +12,7 @@ export default class Game {
     P.settings.SCALE_MODE = P.SCALE_MODES.NEAREST
     this.app = app
     this.mapContainer = new P.Container()
-    this.map = new Map()
+    this.map = new MapBuilder().WithDimensions(40, 40).build()
     app.stage.scale.set(Game.scaleFactor)
     app.stage.addChild(this.mapContainer)
   }

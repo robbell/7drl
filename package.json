@@ -14,6 +14,7 @@
     ]
   },
   "dependencies": {
+    "@types/rot-js": "^0.6.5",
     "pixi.js": "~4.8.6"
   },
   "devDependencies": {

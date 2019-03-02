@@ -1,6 +1,6 @@
 import { Sprite, Container } from 'pixi.js'
 import { Tile } from './Tile'
-import GameConstants from './GameConstants'
+import { GameConstants } from './GameConstants'
 const someImage = require('../img/floor.png')
 
 export class TileRenderer {

@@ -1,11 +1,9 @@
 import { Sprite, Container } from 'pixi.js'
 import { Hero } from './Hero'
-import GameConstants from './GameConstants';
+import { GameConstants } from './GameConstants';
 const someImage = require('../img/hero.png')
 
 export class HeroRenderer {
-    private static width: number = 20
-    private static height: number = 20
     private movementXPixels: number
     private movementYPixels: number
     private sprite: Sprite
