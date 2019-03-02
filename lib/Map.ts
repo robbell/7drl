@@ -30,6 +30,10 @@ export class Map {
       })
     })
 
-    this.hero.update(container)
+    this.hero.update(this, container)
+  }
+
+  isPassable(destination: Coordinate): any {
+    return this.tiles[destination.x][destination.y] == null
   }
 }

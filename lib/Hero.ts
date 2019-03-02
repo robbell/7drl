@@ -1,6 +1,7 @@
 import { Container } from 'pixi.js'
 import { HeroRenderer } from './HeroRenderer'
 import { HeroInput } from './HeroInput'
+import { Map } from './Map'
 import { Coordinate, Direction } from './Coordinate';
 
 export class Hero {
@@ -24,17 +25,18 @@ export class Hero {
         this.destination = position
     }
 
-    update(stage: Container): void {
-        this.heroInput.update(this)
+    update(map: Map, stage: Container): void {
+        this.heroInput.update(this, map)
 
         if (this.isMoving) this.continueMoving()
 
         this.heroRenderer.render(this, stage)
     }
 
-    tryMove(direction: Direction): void {
+    tryMove(direction: Direction, map: Map): void {
         if (this.isMoving) return
-
+        let targetDestination = this.position.move(direction)
+        if (!map.isPassable(targetDestination)) return
         this.isMoving = true
         this.destination = this.position.move(direction)
     }

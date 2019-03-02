@@ -4,12 +4,12 @@ The beginnings of my Seven Day Roguelike entry.
 
 ## To do
 
-* Collision detection
 * Enemies
 * Turns
 * Line of sight
 * Lighting
 * Theme
 * Graphics
+* Animations
 * Graphic optimisation
 * FPS

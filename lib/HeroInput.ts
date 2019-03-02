@@ -1,6 +1,7 @@
 import { Key } from "./Key"
 import { Hero } from "./Hero"
 import { Direction } from "./Coordinate";
+import { Map } from "./Map";
 
 export class HeroInput {
     upKey: Key
@@ -15,10 +16,10 @@ export class HeroInput {
         this.rightKey = new Key("ArrowRight")
     }
 
-    update(hero: Hero): void {
-        if(this.upKey.isDown) hero.tryMove(Direction.up)
-        if(this.downKey.isDown) hero.tryMove(Direction.down)
-        if(this.leftKey.isDown) hero.tryMove(Direction.left)
-        if(this.rightKey.isDown) hero.tryMove(Direction.right)
+    update(hero: Hero, map: Map): void {
+        if(this.upKey.isDown) hero.tryMove(Direction.up, map)
+        if(this.downKey.isDown) hero.tryMove(Direction.down, map)
+        if(this.leftKey.isDown) hero.tryMove(Direction.left, map)
+        if(this.rightKey.isDown) hero.tryMove(Direction.right, map)
     }
 }
