@@ -1,11 +1,12 @@
-import { Container } from 'pixi.js'
+import { DisplayObject } from 'pixi.js'
 import { HeroRenderer } from './HeroRenderer'
 import { HeroInput } from './HeroInput'
 import { Map } from './Map'
 import { Coordinate, Direction } from './Coordinate';
+import { GameObject } from './GameObject';
 
-export class Hero {
-    static movementSteps: number = 15
+export class Hero implements GameObject {
+    private static movementSteps: number = 15
     private heroInput: HeroInput = new HeroInput()
     private heroRenderer: HeroRenderer = new HeroRenderer()
     isMoving: boolean = false
@@ -25,18 +26,25 @@ export class Hero {
         this.destination = position
     }
 
-    update(map: Map, stage: Container): void {
+    initialise() : DisplayObject{
+        return this.heroRenderer.initialise()
+    }
+
+    update(map: Map): void {
         this.heroInput.update(this, map)
 
         if (this.isMoving) this.continueMoving()
 
-        this.heroRenderer.render(this, stage)
+        this.heroRenderer.render(this)
     }
 
     tryMove(direction: Direction, map: Map): void {
         if (this.isMoving) return
+
         let targetDestination = this.position.move(direction)
+
         if (!map.isPassable(targetDestination)) return
+        
         this.isMoving = true
         this.destination = this.position.move(direction)
     }

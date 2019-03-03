@@ -1,23 +1,23 @@
 import Game from './lib/Game'
-import * as P from 'pixi.js'
+import { Application, settings, SCALE_MODES } from 'pixi.js'
 
-window.addEventListener('DOMContentLoaded', initGame)
+window.addEventListener('DOMContentLoaded', initialiseGame)
 
 function removeExistingGame(): void {
   const els = document.body.children
   if (els.length > 0) document.body.removeChild(els.item(0) as Node)
 }
 
-function init(): P.Application {
+function initialise(): Application {
   removeExistingGame()
-  const app = new P.Application(800, 600, { backgroundColor: 0x000000 })
-  P.settings.SCALE_MODE = P.SCALE_MODES.NEAREST
+  const app = new Application(800, 600, { backgroundColor: 0x000000 })
+  settings.SCALE_MODE = SCALE_MODES.NEAREST
   document.body.appendChild(app.view)
   return app
 }
 
-function initGame(): void {
-  const app = init()
+function initialiseGame(): void {
+  const app = initialise()
   const game = new Game(app)
   game.start()
 }
@@ -26,6 +26,6 @@ function initGame(): void {
 if (module.hot) {
   // @ts-ignore
   module.hot.accept(function accept() {
-    initGame()
+    initialiseGame()
   })
 }

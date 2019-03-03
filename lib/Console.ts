@@ -1,25 +1,29 @@
-import * as P from 'pixi.js'
+import { Text, DisplayObject, TextStyle } from 'pixi.js'
+import { GameObject } from './GameObject';
 
-export class Console {
+export class Console implements GameObject {
     private lastMeasurement: number = 0
     private lastTimeRedrawn: number = performance.now()
     private maximumUpdateInterval: number = 500
     private delta: number = 0
-
-    component: P.Text = new P.Text('0', new P.TextStyle({
-        fontFamily: 'Courier New',
+    private displayObject: Text = new Text('0', new TextStyle({
+        fontFamily: 'Courier',
         fontSize: 10,
         fill: '#fff'
     }))
 
-    update() : void{
+    initialise(): DisplayObject {
+        return this.displayObject
+    }
+
+    update(): void {
         let fpsValue = this.calculateFps().toPrecision(4)
         const currentTime = performance.now();
-        
+
         if (this.lastTimeRedrawn > currentTime - this.maximumUpdateInterval) return
 
         this.lastTimeRedrawn = currentTime
-        this.component.text = "FPS:" + fpsValue
+        this.displayObject.text = "FPS:" + fpsValue
     }
 
     private calculateFps(): number {

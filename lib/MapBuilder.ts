@@ -18,8 +18,6 @@ export class MapBuilder {
         new MapGenerator.Digger(this.width, this.height)
             .create((x: number, y: number, value: number) => this.generatorCallback(x, y, value))
 
-        this.map.initialise()
-
         return this.map
     }
 

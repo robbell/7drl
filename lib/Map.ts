@@ -1,18 +1,17 @@
-import { Container } from 'pixi.js'
+import { Container, DisplayObject } from 'pixi.js'
 import { Tile } from './Tile'
 import { Hero } from './Hero'
 import { GameConstants } from './GameConstants'
 import { Coordinate } from './Coordinate'
+import { GameObject } from './GameObject'
 import { FOV as Fov } from "rot-js"
 
-
-export class Map {
-
-  tiles: Tile[][]
-  tileVisibility: number[][];
-  hero!: Hero
-  fov: any;
-  isInitialised: boolean = false;
+export class Map implements GameObject {
+  container: Container
+  private tiles: Tile[][]
+  private hero!: Hero
+  private fov: any;
+  private isInitialised: boolean = false
 
   get xFocalPoint(): number {
     return this.hero.x + GameConstants.tileWidth / 2
@@ -23,67 +22,72 @@ export class Map {
   }
 
   constructor(_width: number, height: number) {
+    this.container = new Container()
     this.tiles = []
-    this.tileVisibility = []
 
     for (var rowCount: number = 0; rowCount < height; rowCount++) {
       this.tiles[rowCount] = []
-      this.tileVisibility[rowCount] = []
     }
   }
 
-  initialise(): void {
-    this.hero = new Hero(this.findStartingPoint())
-    this.fov = new Fov.PreciseShadowcasting((x: number, y: number) => this.lightPasses(x, y));
+  initialise(): DisplayObject {
+    this.initialiseTiles()
+    this.initialiseHero()
     this.isInitialised = true
+
+    return this.container
   }
 
-  initialiseTiles(container: Container): void{
-    this.tiles.forEach(row => {
-      row.forEach(tile => {
-        let visibilityRating = this.tileVisibility[tile.x][tile.y]
-        tile.setVisibility(visibilityRating)
-        tile.initialise(container)
-      })
-    })
-  }
-
-  update(container: Container): void {
+  update(): void {
     if (!this.isInitialised) return
 
-    this.gatherTileVisibility();
+    this.setMapVisibility();
 
     this.tiles.forEach(row => {
       row.forEach(tile => {
-        let visibilityRating = this.tileVisibility[tile.x][tile.y]
-        tile.setVisibility(visibilityRating)
-        tile.update(container)
+        tile.update()
       })
     })
 
-    this.hero.update(this, container)
+    this.hero.update(this)
   }
 
   isPassable(destination: Coordinate): any {
-    return this.tiles[destination.x] == null || this.tiles[destination.x][destination.y] == null || this.tiles[destination.x][destination.y].type == "floor"
+    return this.tiles[destination.x] == null
+      || this.tiles[destination.x][destination.y] == null
+      || this.tiles[destination.x][destination.y].type == "floor"
   }
 
-  private gatherTileVisibility() {
-    this.clearVisibileTiles();
-
-    this.fov.compute(this.hero.position.x, this.hero.position.y, 5, (x: number, y: number, r: number, visibility: number) => this.setTileVisibility(x, y, r, visibility));
+  private initialiseTiles(): void {
+    this.fov = new Fov.PreciseShadowcasting((x: number, y: number) => this.lightPasses(x, y));
+    this.tiles.forEach(row => {
+      row.forEach(tile => {
+        this.container.addChild(tile.initialise())
+      })
+    })
   }
 
-  private clearVisibileTiles() {
-    this.tileVisibility = [];
-    for (let rowCount: number = 0; rowCount < this.tiles.length; rowCount++) {
-      this.tileVisibility[rowCount] = [];
-    }
+  private initialiseHero(): any {
+    this.hero = new Hero(this.findStartingPoint())
+    this.container.addChild(this.hero.initialise())
   }
 
-  private setTileVisibility(x: number, y: number, _r: number, visibility: number): any {
-    if (!this.tileVisibility[x][y] || visibility > this.tileVisibility[x][y])
-      this.tileVisibility[x][y] = visibility;
+  private setMapVisibility(): void {
+    this.resetVisibility();
+    this.fov.compute(this.hero.position.x, this.hero.position.y, 5,
+      (x: number, y: number, r: number, visibility: number) => this.setTileVisibility(x, y, r, visibility));
+  }
+
+  private resetVisibility(): void {
+    this.tiles.forEach(row => {
+      row.forEach(tile => {
+        tile.setVisibility(0)
+      })
+    })
+  }
+
+  private setTileVisibility(x: number, y: number, _r: number, visibility: number): void {
+    this.tiles[x][y].setVisibility(visibility)
   }
 
   private findStartingPoint(): Coordinate {
