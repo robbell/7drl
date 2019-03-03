@@ -7,7 +7,7 @@ export abstract class BaseTile implements GameObject {
     abstract initialise(): DisplayObject
     abstract update(parent?: GameObject): void
     abstract isPassable(): boolean
-    abstract setVisibility(visibility: number): void
+    abstract setVisibility(visibility: number, distance?: number): void
 
     constructor(public type: string, public position: Coordinate) {
     }
@@ -25,8 +25,9 @@ export class Tile extends BaseTile {
         this.tileRenderer.render(this)
     }
 
-    setVisibility(visibility: number): void {
-        this.visibility = visibility;
+    setVisibility(visibility: number, distance?: number): void {
+        let distanceMultiplier = distance == undefined ? 0 : distance / 10
+        this.visibility = visibility - distanceMultiplier
     }
 
     isPassable(): boolean {

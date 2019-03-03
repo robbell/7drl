@@ -61,8 +61,8 @@ export class Map implements GameObject {
   private setMapVisibility(): void {
     this.resetVisibility();
     this.fov.compute(this.hero.position.x, this.hero.position.y, GameConstants.drawDistance,
-      (x: number, y: number, _r: any, visibility: number) => {
-        this.setTileVisibility(new Coordinate(x, y), visibility)
+      (x: number, y: number, distance: any, visibility: number) => {
+        this.setTileVisibility(new Coordinate(x, y), distance, visibility)
       });
   }
 
@@ -70,8 +70,8 @@ export class Map implements GameObject {
     this.tiles.apply(t => t.setVisibility(0))
   }
 
-  private setTileVisibility(position: Coordinate, visibility: number): void {
-    this.tiles.getTileAt(position).setVisibility(visibility)
+  private setTileVisibility(position: Coordinate, distance: number, visibility: number): void {
+    this.tiles.getTileAt(position).setVisibility(visibility, distance)
   }
 
   private findStartingPoint(): Coordinate {
