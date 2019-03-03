@@ -22,7 +22,7 @@ export class Map {
     return this.hero.y + GameConstants.tileHeight / 2
   }
 
-  constructor(width: number, height: number) {
+  constructor(_width: number, height: number) {
     this.tiles = []
     this.tileVisibility = []
 
@@ -81,7 +81,7 @@ export class Map {
     }
   }
 
-  private setTileVisibility(x: number, y: number, r: number, visibility: number): any {
+  private setTileVisibility(x: number, y: number, _r: number, visibility: number): any {
     if (!this.tileVisibility[x][y] || visibility > this.tileVisibility[x][y])
       this.tileVisibility[x][y] = visibility;
   }
