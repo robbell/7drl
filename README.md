@@ -3,8 +3,6 @@
 The beginnings of my Seven Day Roguelike entry.
 
 ## To do
-* General tidy up from top to bottom
-* Line of sight
 * Animations
 * Enemies
 * Turns
