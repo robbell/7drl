@@ -15,5 +15,14 @@ The beginnings of my Seven Day Roguelike entry.
     * Traditional dungeon - you play the monster, fight off questing champions
     * Mad Max style wasteland - machine bosses, sand storms, infiltrate enemy bases
 * Graphics
+* More graphic optimisation
+* FPS
+
+## Done
+* Movement
+* Map generation
+* Collision detection
+* Line of sight
+* General tidy up from top to bottom
 * Graphic optimisation
 * FPS
