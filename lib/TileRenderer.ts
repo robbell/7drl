@@ -12,8 +12,8 @@ export class TileRenderer {
     }
 
     initialise(tile: Tile): Container {
-        this.sprite.x = tile.x * GameConstants.tileWidth
-        this.sprite.y = tile.y * GameConstants.tileHeight
+        this.sprite.x = tile.position.x * GameConstants.tileWidth
+        this.sprite.y = tile.position.y * GameConstants.tileHeight
         this.sprite.blendMode = BLEND_MODES.DIFFERENCE
         this.sprite.alpha = tile.visibility
         return this.sprite

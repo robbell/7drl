@@ -6,7 +6,7 @@ import { Coordinate, Direction } from './Coordinate';
 import { GameObject } from './GameObject';
 
 export class Hero implements GameObject {
-    private static movementSteps: number = 15
+    static movementSteps: number = 15
     private heroInput: HeroInput = new HeroInput()
     private heroRenderer: HeroRenderer = new HeroRenderer()
     isMoving: boolean = false
@@ -22,7 +22,6 @@ export class Hero implements GameObject {
     }
 
     constructor(public position: Coordinate) {
-        console.log(position)
         this.destination = position
     }
 
@@ -32,21 +31,19 @@ export class Hero implements GameObject {
 
     update(map: Map): void {
         this.heroInput.update(this, map)
-
         if (this.isMoving) this.continueMoving()
-
         this.heroRenderer.render(this)
     }
 
     tryMove(direction: Direction, map: Map): void {
         if (this.isMoving) return
 
-        let targetDestination = this.position.move(direction)
+        let targetDestination = this.position.apply(direction)
 
         if (!map.isPassable(targetDestination)) return
         
         this.isMoving = true
-        this.destination = this.position.move(direction)
+        this.destination = targetDestination
     }
 
     private continueMoving() {

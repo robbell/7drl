@@ -1,6 +1,7 @@
 import { Map } from './Map'
 import { Map as MapGenerator } from "rot-js"
 import { Tile } from './Tile'
+import { Coordinate } from './Coordinate';
 
 export class MapBuilder {
     private width: number = 10
@@ -16,12 +17,14 @@ export class MapBuilder {
         this.map = new Map(this.width, this.height)
 
         new MapGenerator.Digger(this.width, this.height)
-            .create((x: number, y: number, value: number) => this.generatorCallback(x, y, value))
+            .create((x: number, y: number, value: number) => this.generatorCallback(new Coordinate(x, y), value))
 
         return this.map
     }
 
-    private generatorCallback(x: number, y: number, value: number) {
-        this.map.tiles[x][y] = value > 0 ? new Tile("wall", x, y) : new Tile("floor", x, y)
+    private generatorCallback(position: Coordinate, value: number) {
+        this.map.tiles.setTileAt(position, value > 0 
+            ? new Tile("wall", position) 
+            : new Tile("floor", position))
     }
 }
