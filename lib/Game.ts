@@ -20,13 +20,15 @@ export default class Game {
     P.settings.SCALE_MODE = P.SCALE_MODES.NEAREST
     this.app = app
     this.mapContainer = new P.Container()
-    this.map = new MapBuilder().WithDimensions(40, 40).build()
+    this.map = new MapBuilder().WithDimensions(200, 200).build()
     app.stage.scale.set(Game.scaleFactor)
     app.stage.addChild(this.mapContainer)
   }
 
   start(): void {
     this.app.stage.addChild(this.consoleText)
+    this.map.initialiseTiles(this.mapContainer)
+
     this.app.ticker.add(_ => {
       this.map.update(this.mapContainer)
       this.mapContainer.position.x = (this.app.screen.width / Game.scaleFactor / 2) - this.map.xFocalPoint

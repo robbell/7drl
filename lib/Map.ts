@@ -9,6 +9,7 @@ import { FOV as Fov } from "rot-js"
 export class Map {
 
   tiles: Tile[][]
+  tileVisibility: number[][];
   hero!: Hero
   fov: any;
   isInitialised: boolean = false;
@@ -23,18 +24,39 @@ export class Map {
 
   constructor(width: number, height: number) {
     this.tiles = []
+    this.tileVisibility = []
+
     for (var rowCount: number = 0; rowCount < height; rowCount++) {
       this.tiles[rowCount] = []
+      this.tileVisibility[rowCount] = []
     }
   }
 
-  update(container: Container): void {
-    if(!this.isInitialised) return
+  initialise(): void {
+    this.hero = new Hero(this.findStartingPoint())
+    this.fov = new Fov.PreciseShadowcasting((x: number, y: number) => this.lightPasses(x, y));
+    this.isInitialised = true
+  }
 
-    this.fov.compute(this.hero.position.x, this.hero.position.y, 10,
-      (x: number, y: number, r: number, visibility: number) => this.dumpVisibility(x, y, r, visibility))
+  initialiseTiles(container: Container): void{
     this.tiles.forEach(row => {
       row.forEach(tile => {
+        let visibilityRating = this.tileVisibility[tile.x][tile.y]
+        tile.setVisibility(visibilityRating)
+        tile.initialise(container)
+      })
+    })
+  }
+
+  update(container: Container): void {
+    if (!this.isInitialised) return
+
+    this.gatherTileVisibility();
+
+    this.tiles.forEach(row => {
+      row.forEach(tile => {
+        let visibilityRating = this.tileVisibility[tile.x][tile.y]
+        tile.setVisibility(visibilityRating)
         tile.update(container)
       })
     })
@@ -42,26 +64,32 @@ export class Map {
     this.hero.update(this, container)
   }
 
-  dumpVisibility(x: number, y: number, r: number, visibility: number): any {
-    console.log(x, y, r, visibility)
-    if(!this.tiles[x][y]) return
-    this.tiles[x][y].setVisibility(visibility)
-  }
-
   isPassable(destination: Coordinate): any {
-    return this.tiles[destination.x][destination.y] == null
+    return this.tiles[destination.x] == null || this.tiles[destination.x][destination.y] == null || this.tiles[destination.x][destination.y].type == "floor"
   }
 
-  initialise(): any {
-    this.hero = new Hero(this.findStartingPoint())
-    this.fov = new Fov.PreciseShadowcasting((x: number, y: number) => this.lightPasses(x, y));
-    this.isInitialised = true
+  private gatherTileVisibility() {
+    this.clearVisibileTiles();
+
+    this.fov.compute(this.hero.position.x, this.hero.position.y, 5, (x: number, y: number, r: number, visibility: number) => this.setTileVisibility(x, y, r, visibility));
+  }
+
+  private clearVisibileTiles() {
+    this.tileVisibility = [];
+    for (let rowCount: number = 0; rowCount < this.tiles.length; rowCount++) {
+      this.tileVisibility[rowCount] = [];
+    }
+  }
+
+  private setTileVisibility(x: number, y: number, r: number, visibility: number): any {
+    if (!this.tileVisibility[x][y] || visibility > this.tileVisibility[x][y])
+      this.tileVisibility[x][y] = visibility;
   }
 
   private findStartingPoint(): Coordinate {
     if (this.tiles != null) {
-      for (var rowCount: number = 0; rowCount < this.tiles.length; rowCount++) {
-        for (var tileCount: number = 0; tileCount < this.tiles[rowCount].length; tileCount++) {
+      for (let rowCount: number = 0; rowCount < this.tiles.length; rowCount++) {
+        for (let tileCount: number = 0; tileCount < this.tiles[rowCount].length; tileCount++) {
           let target = new Coordinate(rowCount, tileCount)
           if (this.isPassable(target)) return target
         }

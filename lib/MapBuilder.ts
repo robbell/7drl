@@ -14,14 +14,16 @@ export class MapBuilder {
 
     build(): Map {
         this.map = new Map(this.width, this.height)
-        let rotMap = new MapGenerator.Digger(this.width, this.height)
-        rotMap.create((x: number, y: number, value: number) => this.generatorCallback(x, y, value))
+
+        new MapGenerator.Digger(this.width, this.height)
+            .create((x: number, y: number, value: number) => this.generatorCallback(x, y, value))
 
         this.map.initialise()
+
         return this.map
     }
 
     private generatorCallback(x: number, y: number, value: number) {
-        if (value > 0) this.map.tiles[x][y] = new Tile("something", x, y)
+        this.map.tiles[x][y] = value > 0 ? new Tile("wall", x, y) : new Tile("floor", x, y)
     }
 }
