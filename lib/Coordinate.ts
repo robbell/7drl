@@ -3,7 +3,7 @@ export class Coordinate {
 
     }
 
-    move(direction: Direction) : Coordinate
+    apply(direction: Direction) : Coordinate
     {
         return direction.directionAction(this)
     }

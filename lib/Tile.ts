@@ -7,6 +7,7 @@ export abstract class BaseTile implements GameObject {
     abstract initialise(): DisplayObject
     abstract update(parent?: GameObject): void
     abstract isPassable(): boolean
+    abstract setVisibility(visibility: number): any
 
     constructor(public type: string, public position: Coordinate) {
     }
@@ -24,7 +25,7 @@ export class Tile extends BaseTile {
         this.tileRenderer.render(this)
     }
 
-    setVisibility(visibility: number): any {
+    setVisibility(visibility: number): void {
         this.visibility = visibility;
     }
 
