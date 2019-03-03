@@ -11,7 +11,6 @@ export default class Game {
   private console: Console;
 
   constructor(app: P.Application) {
-    P.settings.SCALE_MODE = P.SCALE_MODES.NEAREST
     this.app = app
     this.app.stage.scale.set(GameConstants.scaleFactor)
 

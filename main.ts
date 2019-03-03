@@ -10,9 +10,8 @@ function removeExistingGame(): void {
 
 function init(): P.Application {
   removeExistingGame()
-  const app = new P.Application(
-    800, 600, { backgroundColor: 0x000000 }
-  )
+  const app = new P.Application(800, 600, { backgroundColor: 0x000000 })
+  P.settings.SCALE_MODE = P.SCALE_MODES.NEAREST
   document.body.appendChild(app.view)
   return app
 }
