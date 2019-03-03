@@ -7,7 +7,7 @@ export abstract class BaseTile implements GameObject {
     abstract initialise(): DisplayObject
     abstract update(parent?: GameObject): void
     abstract isPassable(): boolean
-    abstract setVisibility(visibility: number): any
+    abstract setVisibility(visibility: number): void
 
     constructor(public type: string, public position: Coordinate) {
     }
@@ -38,13 +38,16 @@ export class NullTile extends BaseTile {
     constructor() {
         super("", new Coordinate(0, 0));
     }
+
     initialise(): DisplayObject {
         throw new Error("Method not implemented.");
     }
 
-    update(_parent?: GameObject): void { }
-
     isPassable(): boolean {
         return true;
     }
+
+    update(_parent?: GameObject): void { }
+
+    setVisibility(_visibility: number): void { }
 }

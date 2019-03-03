@@ -23,6 +23,7 @@ export class HeroRenderer {
     }
 
     initialise(): Container {
+        this.sprite.anchor.set(0.5);
         return this.sprite
     }
 

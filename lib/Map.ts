@@ -14,11 +14,11 @@ export class Map implements GameObject {
   private isInitialised: boolean = false
 
   get xFocalPoint(): number {
-    return this.hero.x + GameConstants.tileWidth / 2
+    return this.hero.x
   }
 
   get yFocalPoint(): number {
-    return this.hero.y + GameConstants.tileHeight / 2
+    return this.hero.y
   }
 
   constructor(width: number, height: number) {

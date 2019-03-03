@@ -5,6 +5,7 @@ const floorImage = require('../img/floor.png')
 const wallImage = require('../img/wall.png')
 
 export class TileRenderer {
+    private visibilityFadeDownRate: number = 0.01
     sprite: Sprite
 
     constructor(type: string) {
@@ -16,10 +17,14 @@ export class TileRenderer {
         this.sprite.y = tile.position.y * GameConstants.tileHeight
         this.sprite.blendMode = BLEND_MODES.DIFFERENCE
         this.sprite.alpha = tile.visibility
+        this.sprite.anchor.set(0.5);
         return this.sprite
     }
 
     render(tile: Tile): void {
-        this.sprite.alpha = tile.visibility ? tile.visibility : 0
+        if (this.sprite.alpha < tile.visibility)
+            this.sprite.alpha = tile.visibility
+        else if (this.sprite.alpha > tile.visibility)
+            this.sprite.alpha -= this.visibilityFadeDownRate
     }
 }
