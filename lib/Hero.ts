@@ -2,11 +2,11 @@ import { DisplayObject } from 'pixi.js'
 import { HeroRenderer } from './HeroRenderer'
 import { HeroInput } from './HeroInput'
 import { Map } from './Map'
-import { Coordinate, Direction } from './Coordinate';
-import { GameObject } from './GameObject';
+import { Coordinate, Direction } from './Coordinate'
+import { GameObject } from './GameObject'
 
 export class Hero implements GameObject {
-    static movementSteps: number = 15
+    static movementSteps: number = 25
     private heroInput: HeroInput = new HeroInput()
     private heroRenderer: HeroRenderer = new HeroRenderer()
     isMoving: boolean = false

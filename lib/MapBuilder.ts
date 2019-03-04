@@ -1,7 +1,7 @@
 import { Map } from './Map'
 import { Map as MapGenerator } from "rot-js"
 import { Tile } from './Tile'
-import { Coordinate } from './Coordinate';
+import { Coordinate } from './Coordinate'
 
 export class MapBuilder {
     private width: number = 10

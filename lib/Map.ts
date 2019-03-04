@@ -4,13 +4,13 @@ import { GameConstants } from './GameConstants'
 import { Coordinate } from './Coordinate'
 import { GameObject } from './GameObject'
 import { FOV as Fov } from "rot-js"
-import { TileArray } from './TileArray';
+import { TileArray } from './TileArray'
 
 export class Map implements GameObject {
   container: Container
   tiles: TileArray
   private hero!: Hero
-  private fov: any;
+  private fov: any
   private isInitialised: boolean = false
 
   get xFocalPoint(): number {
@@ -37,13 +37,13 @@ export class Map implements GameObject {
   update(): void {
     if (!this.isInitialised) return
 
-    this.setMapVisibility();
+    this.setMapVisibility()
     this.tiles.apply(tile => tile.update())
     this.hero.update(this)
   }
 
   isPassable(destination: Coordinate): any {
-    return this.tiles.getTileAt(destination).isPassable();
+    return this.tiles.getTileAt(destination).isPassable()
   }
 
   private initialiseTiles(): void {
@@ -59,11 +59,11 @@ export class Map implements GameObject {
   }
 
   private setMapVisibility(): void {
-    this.resetVisibility();
+    this.resetVisibility()
     this.fov.compute(this.hero.position.x, this.hero.position.y, GameConstants.drawDistance,
       (x: number, y: number, distance: any, visibility: number) => {
         this.setTileVisibility(new Coordinate(x, y), distance, visibility)
-      });
+      })
   }
 
   private resetVisibility(): void {

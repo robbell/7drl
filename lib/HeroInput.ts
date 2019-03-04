@@ -1,7 +1,7 @@
 import { Key } from "./Key"
 import { Hero } from "./Hero"
-import { Direction } from "./Coordinate";
-import { Map } from "./Map";
+import { Direction } from "./Coordinate"
+import { Map } from "./Map"
 
 export class HeroInput {
     upKey: Key

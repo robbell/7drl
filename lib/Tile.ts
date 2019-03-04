@@ -1,7 +1,7 @@
 import { Container, DisplayObject } from 'pixi.js'
 import { TileRenderer } from "./TileRenderer"
-import { GameObject } from './GameObject';
-import { Coordinate } from './Coordinate';
+import { GameObject } from './GameObject'
+import { Coordinate } from './Coordinate'
 
 export abstract class BaseTile implements GameObject {
     abstract initialise(): DisplayObject
@@ -15,7 +15,7 @@ export abstract class BaseTile implements GameObject {
 
 export class Tile extends BaseTile {
     private tileRenderer: TileRenderer = new TileRenderer(this.type)
-    visibility: number = 0;
+    visibility: number = 0
 
     initialise(): Container {
         return this.tileRenderer.initialise(this)
@@ -37,15 +37,15 @@ export class Tile extends BaseTile {
 
 export class NullTile extends BaseTile {
     constructor() {
-        super("", new Coordinate(0, 0));
+        super("", new Coordinate(0, 0))
     }
 
     initialise(): DisplayObject {
-        throw new Error("Method not implemented.");
+        throw new Error("Method not implemented.")
     }
 
     isPassable(): boolean {
-        return true;
+        return true
     }
 
     update(_parent?: GameObject): void { }

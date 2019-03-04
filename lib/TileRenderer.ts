@@ -1,23 +1,22 @@
-import { Sprite, Container, BLEND_MODES } from 'pixi.js'
+import { Sprite, Container } from 'pixi.js'
 import { Tile } from './Tile'
 import { GameConstants } from './GameConstants'
-const floorImage = require('../img/floor.png')
-const wallImage = require('../img/wall.png')
+import { Spritesheet } from './Spritesheet'
 
 export class TileRenderer {
-    private visibilityFadeDownRate: number = 0.01
+    private visibilityFadeDownRate: number = 0.02
     sprite: Sprite
 
     constructor(type: string) {
-        this.sprite = Sprite.from(type == "wall" ? wallImage : floorImage)
+        let texture = Spritesheet.sheet.textures[type == "wall" ? "wall.png" : "floor.png"]
+        this.sprite = new PIXI.Sprite(texture)
     }
 
     initialise(tile: Tile): Container {
         this.sprite.x = tile.position.x * GameConstants.tileWidth
         this.sprite.y = tile.position.y * GameConstants.tileHeight
-        this.sprite.blendMode = BLEND_MODES.DIFFERENCE
         this.sprite.alpha = tile.visibility
-        this.sprite.anchor.set(0.5);
+        this.sprite.anchor.set(0.5)
         return this.sprite
     }
 
@@ -25,6 +24,7 @@ export class TileRenderer {
         if (this.sprite.alpha < tile.visibility)
             this.sprite.alpha = tile.visibility
         else if (this.sprite.alpha > tile.visibility)
-            this.sprite.alpha -= this.visibilityFadeDownRate
+            if (this.sprite.alpha - this.visibilityFadeDownRate < 0.15) this.sprite.alpha = 0.15
+            else this.sprite.alpha -= this.visibilityFadeDownRate
     }
 }

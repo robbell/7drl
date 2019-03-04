@@ -2,7 +2,7 @@ import Game from './lib/Game'
 import { Spritesheet } from "./lib/Spritesheet";
 import { Application, settings, SCALE_MODES } from 'pixi.js'
 
-window.addEventListener('DOMContentLoaded', initialiseGame)
+window.addEventListener('DOMContentLoaded', startInitialiseGame)
 
 function removeExistingGame(): void {
   const els = document.body.children
@@ -12,22 +12,28 @@ function removeExistingGame(): void {
 function initialise(): Application {
   removeExistingGame()
   const app = new Application(800, 600, { backgroundColor: 0x000000 })
-  settings.SCALE_MODE = SCALE_MODES.NEAREST
   document.body.appendChild(app.view)
   return app
 }
 
-function initialiseGame(): void {
+function startInitialiseGame(): void {
+  settings.SCALE_MODE = SCALE_MODES.NEAREST
+  new Spritesheet("sprites.json")
+  Spritesheet.loadAndCall(() => completeInitialiseGame())
+}
+
+function completeInitialiseGame(): void {
+  console.log(Spritesheet.sheet)
   const app = initialise()
   const game = new Game(app)
-  new Spritesheet("sprites.json")
-  Spritesheet.loadAndCall(() => game.start())
+  game.start()
 }
+
 
 // @ts-ignore
 if (module.hot) {
   // @ts-ignore
   module.hot.accept(function accept() {
-    initialiseGame()
+    startInitialiseGame()
   })
 }
