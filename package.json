@@ -4,9 +4,9 @@
   "description": "The beginnings of my Seven Day Roguelike entry.",
   "main": "main.js",
   "scripts": {
-    "prebuild": "rmdir dist /s /q",
+    "prebuild": "rmdir dist /s /q && mkdir dist",
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "cp img/sprites.json dist/ && cp img/sprites.png dist/ && parcel build index.html"
   },
   "browserslist": {
     "development": [
@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "@types/rot-js": "^0.6.5",
-    "pixi.js": "~4.8.6"
+    "pixi.js": "~4.8.6",
+    "rot-js": "^2.0.3"
   },
   "devDependencies": {
     "@types/pixi.js": "~4.8.6",

@@ -1,12 +1,12 @@
-import { Sprite, Container } from 'pixi.js'
+import { Container } from 'pixi.js'
 import { Hero } from './Hero'
 import { GameConstants } from './GameConstants';
-const heroImage = require('../img/hero.png')
+import { Spritesheet } from './Spritesheet';
 
 export class HeroRenderer {
     private movementXPixels: number
     private movementYPixels: number
-    private sprite: Sprite
+    private sprite: PIXI.extras.AnimatedSprite
 
     get x(): number {
         return this.sprite.x
@@ -19,7 +19,9 @@ export class HeroRenderer {
     constructor() {
         this.movementYPixels = GameConstants.tileHeight / Hero.movementSteps
         this.movementXPixels = GameConstants.tileWidth / Hero.movementSteps
-        this.sprite = Sprite.from(heroImage)
+        this.sprite = new PIXI.extras.AnimatedSprite(Spritesheet.sheet.animations["hero/hero"])
+        this.sprite.animationSpeed = 0.1; 
+        this.sprite.play();
     }
 
     initialise(): Container {

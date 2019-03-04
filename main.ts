@@ -1,4 +1,5 @@
 import Game from './lib/Game'
+import { Spritesheet } from "./lib/Spritesheet";
 import { Application, settings, SCALE_MODES } from 'pixi.js'
 
 window.addEventListener('DOMContentLoaded', initialiseGame)
@@ -19,7 +20,8 @@ function initialise(): Application {
 function initialiseGame(): void {
   const app = initialise()
   const game = new Game(app)
-  game.start()
+  new Spritesheet("sprites.json")
+  Spritesheet.loadAndCall(() => game.start())
 }
 
 // @ts-ignore

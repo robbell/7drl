@@ -23,7 +23,7 @@ export class Console implements GameObject {
         if (this.lastTimeRedrawn > currentTime - this.maximumUpdateInterval) return
 
         this.lastTimeRedrawn = currentTime
-        this.displayObject.text = "FPS3:" + fpsValue
+        this.displayObject.text = "FPS4:" + fpsValue
     }
 
     private calculateFps(): number {
